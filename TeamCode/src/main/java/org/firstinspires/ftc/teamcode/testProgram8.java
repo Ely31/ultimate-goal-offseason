@@ -40,7 +40,8 @@ public class testProgram8 extends LinearOpMode {
 
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
-
+        boolean prevx = false;
+        boolean prevb = false;
         boolean intaketoggle = false;
         boolean shootertoggle = false;
         waitForStart();
@@ -58,20 +59,22 @@ public class testProgram8 extends LinearOpMode {
 
 
             // shooter toggler
-            if (gamepad2.b) {
-                sleep(100);
+            if (gamepad2.b && !prevb) { // if b pressed and prevx is false
                 shootertoggle = !shootertoggle; // toggle shootertoggle when b is pressed
             }
+            prevb = gamepad2.b;
+
             if (shootertoggle) { // run shooter if shootertoggle is true
                 shooter.setPower(-0.5);
             } else {
                 shooter.setPower(0);
             }
             // intake toggler
-            if (gamepad2.x) {
-                sleep(100);
+            if (gamepad2.x && !prevx) { // if x pressed and prevx is false
                 intaketoggle = !intaketoggle;
             }
+            prevx = gamepad2.x;
+
             if (intaketoggle) {
                 collectionMechanism.setPower(1);
                 neat.setPower(1);
@@ -98,14 +101,14 @@ public class testProgram8 extends LinearOpMode {
                 FR.setPower(v2);
                 BL.setPower(v3);
                 BR.setPower(v4);
-                wobbleArm.setPower(wobblepower/2);
+                wobbleArm.setPower(wobblepower/4);
             } else if (gamepad1.right_trigger > 0.1) { // if left trigger pressed
                 FL.setPower(v1 / 8);
                 FR.setPower(v2 / 8);
                 BL.setPower(v3 / 8);
                 BR.setPower(v4 / 8);
                 // drive slow
-                wobbleArm.setPower(wobblepower/2);
+                wobbleArm.setPower(wobblepower/4);
             }
             telemetry.addData("status", "r" + r);
             telemetry.addData("status", "robot angle: " + robotAngle);

@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "testProgram8")
-public class testProgram8 extends LinearOpMode {
+@TeleOp
+public class mainteleop extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     DcMotor FR = null;

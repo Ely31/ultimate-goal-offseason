@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
-public class mainteleop extends LinearOpMode {
-
+public class mainteleopsolo extends LinearOpMode {
     DcMotor FR = null;
     DcMotor FL = null;
     DcMotor BR = null;
@@ -55,11 +54,10 @@ public class mainteleop extends LinearOpMode {
             final double v4 = r * Math.cos(robotAngle) - rightX;
 
             // shooter toggler
-            if (gamepad2.b && !prevb) { // if b pressed and prevx is false
+            if (gamepad1.b && !prevb) { // if b pressed and prevx is false
                 shootertoggle = !shootertoggle; // toggle shootertoggle when b is pressed
             }
-            prevb = gamepad2.b;
-
+            prevb = gamepad1.b;
             if (shootertoggle) { // run shooter if shootertoggle is true
                 shooter.setPower(-0.5);
             } else {
@@ -67,15 +65,15 @@ public class mainteleop extends LinearOpMode {
             }
 
             // reverse intake if a is pressed
-            if (gamepad2.a){
+            if (gamepad1.a){
                 intakepow = -1;
             } else intakepow = 1;
 
             // intake toggler
-            if (gamepad2.x && !prevx) { // if x pressed and prevx is false
+            if (gamepad1.x && !prevx) { // if x pressed and prevx is false
                 intaketoggle = !intaketoggle;
             }
-            prevx = gamepad2.x;
+            prevx = gamepad1.x;
             if (intaketoggle) {
                 collectionMechanism.setPower(intakepow);
                 neat.setPower(intakepow);
@@ -83,18 +81,18 @@ public class mainteleop extends LinearOpMode {
                 collectionMechanism.setPower(0);
                 neat.setPower(0);
             }
+
             // shoot a ring when a is pressed
             if (gamepad1.left_trigger > 0.1) {
                 ringPusher.setPosition(0.6);
             }
-                else {ringPusher.setPosition(0.95);
-            }
+                else ringPusher.setPosition(0.95);
 
             // toggle clawtoggle if y pressed
-            if (gamepad2.y && !prevy) {
-                clawtoggle = !clawtoggle;
+            if (gamepad1.y && !prevy) {
+               clawtoggle = !clawtoggle;
             }
-            prevy = gamepad2.y;
+            prevy = gamepad1.y;
             // open wobble claw when toggle is true
             if (clawtoggle) {
                 wobbleGoalGrabber.setPosition(1);
@@ -103,9 +101,9 @@ public class mainteleop extends LinearOpMode {
             }
 
             // control wobble arm with dpad
-            if (gamepad2.dpad_down) {
+            if (gamepad1.dpad_down) {
                 wobbleArm.setPower(-0.25);
-            } else if (gamepad2.dpad_up){
+            } else if (gamepad1.dpad_up){
                 wobbleArm.setPower(0.25);
             } else wobbleArm.setPower(0);
 

@@ -19,14 +19,14 @@ public class mainteleopsolo extends LinearOpMode {
     public void runOpMode() {
         // initialization
         // hardwaremap
-        // motors
+        // drivetrain
         FR = hardwareMap.get(DcMotor.class, "FR");
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
-
+        // mechanisms
         shooter = hardwareMap.get(DcMotor.class, "shooter");
         collectionMechanism = hardwareMap.get(DcMotor.class, "collectionMechanism");
         wobbleArm = hardwareMap.get(DcMotor.class, "wobbleArm");
@@ -36,6 +36,9 @@ public class mainteleopsolo extends LinearOpMode {
         ringPusher = hardwareMap.get(Servo.class, "ringPusher");
         ringPusher.setPosition(0.95);
 
+        double shooterpow = 0.5;
+        boolean prevpadright = false;
+        boolean prevpadleft = false;
         double drivepow;
         double intakepow;
         boolean prevy = false;
@@ -71,8 +74,14 @@ public class mainteleopsolo extends LinearOpMode {
             prevb = gamepad1.b;
 
             if (shootertoggle) { // run shooter if shootertoggle is true
-                shooter.setPower(-0.5);
+                shooter.setPower(-shooterpow);
             } else shooter.setPower(0);
+
+            // change shooter power with dpad left and rigt
+            if (gamepad1.dpad_right && !prevpadright) shooterpow += 0.05;
+            prevpadright = gamepad1.dpad_right;
+            if (gamepad1.dpad_left && !prevpadleft) shooterpow -= 0.05;
+            prevpadleft = gamepad1.dpad_left;
 
             // reverse intake if a is pressed
             if (gamepad1.a) intakepow = -1;
@@ -100,10 +109,11 @@ public class mainteleopsolo extends LinearOpMode {
             else wobbleGoalGrabber.setPosition(0.25);
 
             // control wobble arm with dpad
-            if (gamepad1.dpad_down) wobbleArm.setPower(-0.25);
-            else if (gamepad1.dpad_up) wobbleArm.setPower(0.25);
+            if (gamepad1.dpad_up) wobbleArm.setPower(-0.25);
+            else if (gamepad1.dpad_down) wobbleArm.setPower(0.35);
             else wobbleArm.setPower(0);
 
+            telemetry.addData("shooterpow", shooterpow );
             telemetry.update();
         }
     }

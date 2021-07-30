@@ -35,8 +35,9 @@ public class mainteleop extends LinearOpMode {
         wobbleGoalGrabber = hardwareMap.get(Servo.class, "wobbleGoalGrabber");
         ringPusher = hardwareMap.get(Servo.class, "ringPusher");
         ringPusher.setPosition(0.95);
+        wobbleGoalGrabber.setPosition(0.25);
 
-        double shooterpow = 0.5;
+        double shooterpow = 0.4;
         boolean prevpadright = false;
         boolean prevpadleft = false;
         double drivepow;
